@@ -97,12 +97,18 @@ def showing_data(results):
         text_file.write('-- Total Requests: {}.\n'.format(samples))
         text_file.write('-- Google Detections: {}.\n'.format(splten_google))
         text_file.write('-- Amazon Detections: {}.\n'.format(splten_amazon))
+        text_file.write('-- Google Detections Percentatge: {0:.2f}.\n'.format((splten_google/samples)*100))
+        text_file.write('-- Amazon Detections Percentatge: {0:.2f}.\n'.format((splten_amazon/samples)*100))
         msg = (sum(results['score_google'])/float(samples))*100
         text_file.write('(2) Total Accuracy:\n')
         text_file.write('-- Total Google Accuracy: {0:.2f}%.\n'.format(msg))
         msg = (sum(results['score_amazon'])/float(samples))*100
         text_file.write('-- Total Amazon Accuracy: {0:.2f}%.\n'.format(msg))
         text_file.write('(3) Accuracy of the first Positions:\n')
+        text_file.write('-- Google First Positions: {}.\n'.format(spl_google))
+        text_file.write('-- Google First Detections Percentatge: {0:.2f}.\n'.format((spl_google/samples)*100))
+        text_file.write('-- Amazon First Positions: {}.\n'.format(spl_amazon))
+        text_file.write('-- Amazon First Detections Percentatge: {0:.2f}.\n'.format((spl_amazon/samples)*100))
         text_file.write('-- First Positions Google Accuracy: {0:.2f}%.\n'.format(avg_scr_google*100))
         text_file.write('-- First Positions Amazon Accuracy: {0:.2f}%.\n'.format(avg_scr_amazon*100))
         text_file.write('(4) Accuracy of the detected requests:\n')
