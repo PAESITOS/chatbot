@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "silver-agility-197415",
+  "private_key_id": "e1d6a9f5bf2c993327e6af49936f50fc368aa78f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDnOhtOVgLE8RWO\nzo7OSositeEhRV8oSubw52rQGppbrogW1qbw2d90UaGUu4UiSYUgSkJS8cImQfkV\ntw2F8ET/RWJtJMY2Kg2PkcSqADXJSCP1haUWQBw2N7jnM2qnvVIt9UxjLuG4oJVH\nvGW5xdJVs46a9lW8nVY6e4OO6vJQNea+FR7AvSHawDAMvsZVHLYk0wW9Mq4iRVPP\njaOMWbRpyFjH/pdAL6nZTfOIU1vpDQUxFuNwAx6XDwRscsraQ+9pyjaYKR0qOiBY\nWI/0xw44SouEdnBPDsdePnaofliUtldYY/mOGN5nzPfiua1afdnaU99d6NuYvS8J\nsb4HWKKjAgMBAAECggEAYTOeEvo5Q80NAPF4OuQ/RSIsN65P6EJEfvTpg/4K8YuX\nDfLCTvFn7B/8yudheh5p5j8RToju0uJc8XH4L1vnxV/HlpYk9NQMy1O91rEr6yd2\nZln+IjJlKa2W/yowJb+Ccmtx5yfoH5Lx7iwWn1e3qetHgYEYXafOfds6XLQLlQen\nHQy+MsE9rimnEXtE5JTZ4pv5WmC+N6qfykQhvb6yABjXlijK6Rm9PZ/mVoiyRkuc\nIpADgLbbHo97btHZ/AvhC5QRv2uto1Jst39iBo7olHngHFVs0wyHvsiNja/Z4uxZ\nmrXrQinUTio3Wxc0OjWLyCB4485tOqP9VagM3hUbIQKBgQD16HZCFglMS64cf3cY\nV9OCY1yXMQneDQ6MXg4RngU4FaLW1kG5ixZ9FqEh3d3tIKP+Kda4HxAtO/53p/w5\nyQ4LtMBBvho5K8ADlzz1N6pZ2qyGCLOm4dggzKNAiyoZsSxJ0iMog6WlHH/zkK9e\nHV1bghgfmHsXqTXHE2YlB15pmQKBgQDwt2dWu9et8UbYOE8cI/ZiwrpIppEj24Us\nT6gohX3NFs9ot0lMYOLsgGR9KJmXKFNMXXZXk9S1IQ6iv/2vsfw/x4BdJvJ3GUsv\ntgyXuoUs6OcuxqkJY8KQrsfw3ey3SjdBJFrkCIaaXEg5/6aEhpMVwTbaGkqc17+H\n/H1X3EIrmwKBgQDdxh3JMhiGn4ZSGz7sTGDrqfLaRBazFTF2tGiZyNrKHvEyMh8q\nV98bRypg4biBYDumQFNu0E0FjqLLhUu7TbEGK6hsYidCQku0sVP/j4lp6gZIB1cG\nfY4u3n+o+Rkp/JiFpyegJUJhq1dV8bnG9lK48ZYSALGawDdI6Bzp7kBemQKBgEkk\n0afPSEg4inhlE9TPMKzt0sEErBGjQKIoSkaV2ZYaGkgNeZ5Vyl5m3SIS1ijSPg10\nUONnrjijpNjbUfCzOpz+uAiWLxL1gp0qykTIjnMJCkZyYybRQ2vHUEXmiWlgic2n\niF7GIHCDHgdRoX2fjs4LeeloF8f03uQpWsT5zrmFAoGAXurRnjaVvPRGcgjfq75U\nYouWgsB+OOeZJDdoTcKBnR3zFpHSvKrg3dGkw1KO6dI4cD9rgwOhiJDzLUjAQG1K\n1f4eyVvawm737gpxT+cBmQPC6oZprZCxeXFmfW3NHkFQg1d9CNrkuxR/fqRGRZy1\npACKdfsnrszGNHS0z9rHrv0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "chatbot@silver-agility-197415.iam.gserviceaccount.com",
+  "client_id": "111171342458210576830",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chatbot%40silver-agility-197415.iam.gserviceaccount.com"
+}
