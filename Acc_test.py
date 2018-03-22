@@ -47,10 +47,10 @@ def google_accuracy(vision_client,image,real_label):
             pos = counter
             score=(11-counter)/10
         else:
-            if label in keys:
-                google_words[label] += 1
+            if label.description in keys:
+                google_words[label.description] += 1
             else:
-                google_words[label] = 1
+                google_words[label.description] = 1
     return score, pos
 
 def amazon_accuracy(rekognition_client,content,real_label):
@@ -70,10 +70,10 @@ def amazon_accuracy(rekognition_client,content,real_label):
             pos = counter
             score=(11-counter)/10
         else:
-            if label in keys:
-                amazon_words[label] += 1
+            if label['Name'] in keys:
+                amazon_words[label['Name']] += 1
             else:
-                amazon_words[label] = 1
+                amazon_words[label['Name']] = 1
     return score, pos
 
 def obtaining_results(data_directory,vision_client,rekognition_client):

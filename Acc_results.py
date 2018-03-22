@@ -14,14 +14,16 @@ import numpy as np
 
 # -- FUNCTION DEFINITIONS -- #
 
-def get_results():
+def get_data():
     """ 
     This function loads the data saved in the "pkl" file and returns it. 
     """
     file = open('results.pkl','rb')
-    return pickle.load(file)
+    file_wgo = open('google_words.pkl','rb')
+    file_wam = open('amazon_words.pkl','rb')
+    return pickle.load(file), pickle.load(file_wgo), pickle.load(file_wam)
 
-def showing_data(results):
+def showing_data(results,wgoogle,wamazon):
     """
     This function reorganizes the data and plots the graphs  
     """
@@ -40,7 +42,7 @@ def showing_data(results):
     plt.close(fig1)
 
     # -- SCORE OF THE FIRST POSITION -- #
-    samples = len(results['pos_google'])
+    samples = len(results['file_name'])
     ind_google = [i for i in range(samples) if results['pos_google'][i] == 1]
     ind_amazon = [i for i in range(samples) if results['pos_amazon'][i] == 1]
     scr_google =[ results['score_google'][i] for i in ind_google]
@@ -74,21 +76,8 @@ def showing_data(results):
     splten_amazon = len(scrten_amazon)
     avgten_scr_google = sum(scrten_google)/float(splten_google)
     avgten_scr_amazon = sum(scrten_amazon)/float(splten_amazon)
-    fig3 = plt.figure(figsize=(12,8))
-    plt.plot(range(splten_google),scrten_google,'-',linewidth=0.9,label='Google Score',color='royalblue')
-    plt.axhline(y=avgten_scr_google,xmin=0,xmax=splten_google,linewidth=2,\
-                label='Average Google Score',color='navy',alpha=1)
-    plt.plot(range(splten_amazon),scrten_amazon,'-',linewidth=0.9,label='Amazon Score',color='darkorange')
-    plt.axhline(y=avgten_scr_amazon,xmin=0,xmax=splten_amazon,linewidth=2,\
-                label='Average Amazon Score',color='orangered',alpha=1)
-    plt.title('Score of the first 10 Positions')
-    plt.xlabel('Requests')
-    plt.ylabel('Confidence')
-    plt.legend(loc='lower right')
-    plt.grid(True)
-    plt.axis([0,max(splten_google,splten_amazon),0.5,1])
-    plt.savefig('Out/Detected_Scores.png',bbox_inches='tight')
-    plt.close(fig3)
+
+    # -- MOST COMMON WORDS -- #
 
     # -- PRINTING PUNTUATION -- #
     with open('Out/Results.txt','w') as text_file:
@@ -139,10 +128,10 @@ def main():
     if the user wants to get more detailed results.
     """ 
     # -- GET THE RESULTS FROM A PICKLE FILE -- #
-    results = get_results()
+    results,wgoogle,wamazon = get_data()
 
     # -- PLOTTING THE RESULTS OBTAINED -- #
-    showing_data(results)
+    showing_data(results,wgoogle,wamazon)
 
     # -- WRITING THE RESULTS IN A CSV FILE -- #
     write_csv(results)
