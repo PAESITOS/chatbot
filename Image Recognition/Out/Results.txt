@@ -1,0 +1,18 @@
+_-_-_-_-_-_-_-_-_-_-_-_-_ ACCURACY RESULTS _-_-_-_-_-_-_-_-_-_-_-_-_
+(1) General Data:
+-- Total Requests: 453.
+-- Google Detections: 295.
+-- Amazon Detections: 300.
+-- Google Detections Percentatge: 65.12%.
+-- Amazon Detections Percentatge: 66.23%.
+(2) Total Accuracy:
+-- Total Google Accuracy: 53.95%.
+-- Total Amazon Accuracy: 49.60%.
+(3) Accuracy of the first Positions:
+-- Google First Positions: 105.
+-- Google First Detections Percentatge: 23.18%.
+-- Amazon First Positions: 111.
+-- Amazon First Detections Percentatge: 24.50%.
+(4) Accuracy of the detected requests:
+-- Detected Google Accuracy: 82.85%.
+-- Detected Amazon Accuracy: 74.90%.
