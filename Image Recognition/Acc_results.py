@@ -14,6 +14,7 @@ import numpy as np
 
 from operator import itemgetter
 from collections import OrderedDict
+from mfgoogle import most_frequent_google
 
 # -- FUNCTION DEFINITIONS -- #
 
@@ -84,7 +85,7 @@ def showing_data(results,wgoogle,wamazon):
     lkgoogle = []
     keys = wgoo_sort.keys()
     for key in keys:
-        if wgoo_sort[key] >= 15:
+        if wgoo_sort[key] >= 25:
             lkgoogle.append(key)
             lvgoogle.append(wgoo_sort[key])
     fig3 = plt.figure(figsize=(12,8))
@@ -113,6 +114,21 @@ def showing_data(results,wgoogle,wamazon):
     plt.xticks(range(len(lkamazon)),lkamazon,rotation=90)
     plt.savefig('Out/Amazon_Labels.png',bbox_inches='tight')
     plt.close(fig4)
+
+    # -- CREATING PYTHON FILES WITH LISTS -- #
+    google_file = 'mfgoogle.py'
+    amazon_file = 'mfamazon.py'
+    with open(google_file,'w') as file:
+        file.write('entire_google_data = {}\n'.format(list(wgoogle.keys())))
+        file.write('most_frequent_google = {}\n'.format(lkgoogle))
+    file.close()
+    with open(amazon_file,'w') as file:
+        file.write('entire_amazon_data = {}\n'.format(list(wamazon.keys())))
+        file.write('most_frequent_amazon = {}\n'.format(lkamazon))
+    file.close()
+
+    for i in most_frequent_google:
+        print(i)
 
     # -- PRINTING PUNTUATION -- #
     with open('Out/Results.txt','w') as text_file:
