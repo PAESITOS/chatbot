@@ -12,6 +12,10 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 
+from operator import itemgetter
+from collections import OrderedDict
+from mfgoogle import most_frequent_google
+
 # -- FUNCTION DEFINITIONS -- #
 
 def get_data():
@@ -49,23 +53,6 @@ def showing_data(results,wgoogle,wamazon):
     scr_amazon =[ results['score_amazon'][i] for i in ind_amazon]
     spl_google = len(scr_google)
     spl_amazon = len(scr_amazon)
-    avg_scr_google = sum(scr_google)/float(spl_google)
-    avg_scr_amazon = sum(scr_amazon)/float(spl_amazon)
-    fig2 = plt.figure(figsize=(12,8))
-    plt.plot(range(spl_google),scr_google,'-',linewidth=0.9,label='Google Score',color='royalblue')
-    plt.axhline(y=avg_scr_google,xmin=0,xmax=spl_google,linewidth=2,\
-                label='Average Google Score',color='navy',alpha=1)
-    plt.plot(range(spl_amazon),scr_amazon,'-',linewidth=0.9,label='Amazon Score',color='darkorange')
-    plt.axhline(y=avg_scr_amazon,xmin=0,xmax=spl_amazon,linewidth=2,\
-                label='Average Amazon Score',color='orangered',alpha=1)
-    plt.title('Score of the first Positions')
-    plt.xlabel('Requests')
-    plt.ylabel('Confidence')
-    plt.legend(loc='lower right')
-    plt.grid(True)
-    plt.axis([0,max(spl_google,spl_amazon),0.5,1])
-    plt.savefig('Out/First_Score.png',bbox_inches='tight')
-    plt.close(fig2)
 
     # -- SCORE OF THE DETECTED POSITIONS -- #
     indten_google = [i for i in range(samples) if results['pos_google'][i] <= 10]
@@ -76,8 +63,72 @@ def showing_data(results,wgoogle,wamazon):
     splten_amazon = len(scrten_amazon)
     avgten_scr_google = sum(scrten_google)/float(splten_google)
     avgten_scr_amazon = sum(scrten_amazon)/float(splten_amazon)
+    fig2 = plt.figure(figsize=(12,8))
+    plt.plot(range(splten_google),scrten_google,'-',linewidth=0.9,label='Google Score',color='royalblue')
+    plt.axhline(y=avgten_scr_google,xmin=0,xmax=splten_google,linewidth=2,\
+                label='Average Google Score',color='navy',alpha=1)
+    plt.plot(range(splten_amazon),scrten_amazon,'-',linewidth=0.9,label='Amazon Score',color='darkorange')
+    plt.axhline(y=avgten_scr_amazon,xmin=0,xmax=spl_amazon,linewidth=2,\
+                label='Average Amazon Score',color='orangered',alpha=1)
+    plt.title('Score of the Detected Positions')
+    plt.xlabel('Requests')
+    plt.ylabel('Score')
+    plt.legend(loc='lower left')
+    plt.grid(True)
+    plt.axis([0,max(splten_google,splten_amazon),0.0,1])
+    plt.savefig('Out/Detected_Score.png',bbox_inches='tight')
+    plt.close(fig2)
 
-    # -- MOST COMMON WORDS -- #
+    # -- MOST COMMON GOOGLE WORDS -- #
+    wgoo_sort = OrderedDict(sorted(wgoogle.items(), key=itemgetter(1),reverse=True))
+    lvgoogle = []
+    lkgoogle = []
+    keys = wgoo_sort.keys()
+    for key in keys:
+        if wgoo_sort[key] >= 25:
+            lkgoogle.append(key)
+            lvgoogle.append(wgoo_sort[key])
+    fig3 = plt.figure(figsize=(12,8))
+    plt.bar(range(len(lkgoogle)),lvgoogle,color='royalblue')
+    plt.title('Most Common Labels in Google Image Vision')
+    plt.xlabel('Labels')
+    plt.ylabel('Frequency')
+    plt.xticks(range(len(lkgoogle)),lkgoogle,rotation=90)
+    plt.savefig('Out/Google_Labels.png',bbox_inches='tight')
+    plt.close(fig3)
+
+    # -- MOST COMMON AMAZON WORDS -- #
+    wama_sort = OrderedDict(sorted(wamazon.items(), key=itemgetter(1),reverse=True))
+    lvamazon = []
+    lkamazon = []
+    keys = wama_sort.keys()
+    for key in keys:
+        if wama_sort[key] >= 15:
+            lkamazon.append(key)
+            lvamazon.append(wama_sort[key])
+    fig4 = plt.figure(figsize=(12,8))
+    plt.bar(range(len(lkamazon)),lvamazon,color='darkorange')
+    plt.title('Most Common Labels in Amazon Rekognition')
+    plt.xlabel('Labels')
+    plt.ylabel('Frequency')
+    plt.xticks(range(len(lkamazon)),lkamazon,rotation=90)
+    plt.savefig('Out/Amazon_Labels.png',bbox_inches='tight')
+    plt.close(fig4)
+
+    # -- CREATING PYTHON FILES WITH LISTS -- #
+    google_file = 'mfgoogle.py'
+    amazon_file = 'mfamazon.py'
+    with open(google_file,'w') as file:
+        file.write('entire_google_data = {}\n'.format(list(wgoogle.keys())))
+        file.write('most_frequent_google = {}\n'.format(lkgoogle))
+    file.close()
+    with open(amazon_file,'w') as file:
+        file.write('entire_amazon_data = {}\n'.format(list(wamazon.keys())))
+        file.write('most_frequent_amazon = {}\n'.format(lkamazon))
+    file.close()
+
+    for i in most_frequent_google:
+        print(i)
 
     # -- PRINTING PUNTUATION -- #
     with open('Out/Results.txt','w') as text_file:
@@ -86,8 +137,8 @@ def showing_data(results,wgoogle,wamazon):
         text_file.write('-- Total Requests: {}.\n'.format(samples))
         text_file.write('-- Google Detections: {}.\n'.format(splten_google))
         text_file.write('-- Amazon Detections: {}.\n'.format(splten_amazon))
-        text_file.write('-- Google Detections Percentatge: {0:.2f}.\n'.format((splten_google/samples)*100))
-        text_file.write('-- Amazon Detections Percentatge: {0:.2f}.\n'.format((splten_amazon/samples)*100))
+        text_file.write('-- Google Detections Percentatge: {0:.2f}%.\n'.format((splten_google/samples)*100))
+        text_file.write('-- Amazon Detections Percentatge: {0:.2f}%.\n'.format((splten_amazon/samples)*100))
         msg = (sum(results['score_google'])/float(samples))*100
         text_file.write('(2) Total Accuracy:\n')
         text_file.write('-- Total Google Accuracy: {0:.2f}%.\n'.format(msg))
@@ -95,11 +146,9 @@ def showing_data(results,wgoogle,wamazon):
         text_file.write('-- Total Amazon Accuracy: {0:.2f}%.\n'.format(msg))
         text_file.write('(3) Accuracy of the first Positions:\n')
         text_file.write('-- Google First Positions: {}.\n'.format(spl_google))
-        text_file.write('-- Google First Detections Percentatge: {0:.2f}.\n'.format((spl_google/samples)*100))
+        text_file.write('-- Google First Detections Percentatge: {0:.2f}%.\n'.format((spl_google/samples)*100))
         text_file.write('-- Amazon First Positions: {}.\n'.format(spl_amazon))
-        text_file.write('-- Amazon First Detections Percentatge: {0:.2f}.\n'.format((spl_amazon/samples)*100))
-        text_file.write('-- First Positions Google Accuracy: {0:.2f}%.\n'.format(avg_scr_google*100))
-        text_file.write('-- First Positions Amazon Accuracy: {0:.2f}%.\n'.format(avg_scr_amazon*100))
+        text_file.write('-- Amazon First Detections Percentatge: {0:.2f}%.\n'.format((spl_amazon/samples)*100))
         text_file.write('(4) Accuracy of the detected requests:\n')
         text_file.write('-- Detected Google Accuracy: {0:.2f}%.\n'.format(avgten_scr_google*100))
         text_file.write('-- Detected Amazon Accuracy: {0:.2f}%.\n'.format(avgten_scr_amazon*100))
