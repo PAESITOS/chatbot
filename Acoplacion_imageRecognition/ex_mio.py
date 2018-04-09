@@ -57,6 +57,13 @@ def start(bot, update):
 
     return CHOOSING
 def tipus (bot, update, user_data):
+    for o in range(0,len(ingr_list_client)):
+        ingr_list_client.remove(ingr_list_client[0])
+        ingr_correction.remove(ingr_correction[0])
+    
+    for k in range(0,len(ingr_correct)):
+        print k
+        ingr_correct.remove(ingr_correct[0])
     update.message.reply_text('Do you want to write or to send a photo of the ingredients?', reply_markup=markup3)
     return TIPUS
 
@@ -66,23 +73,32 @@ def foto_choice(bot, update, user_data):
     #update.message.reply_text('COMING SOON! Select Written for a recipe', reply_markup=markup3)
     return PHOTO
 
-def photo(bot, uptade, user_data):
+def photo(bot, update):
     user=update.message.from_user
     photo_file= bot.get_file(update.message.photo[-1].file_id)
-    photo_file.download('infredient.jpg')
+    photo_file.download('ingredient.jpg')
     logger.info("Photo of %s: %s", user.first_name, 'ingredient.jpg')
 
     ingr_correct.append(amazon_recognition()) #Això ens proporciona un label que ha estat filtrat
-    
+    update.message.reply_text('Do you want to send another photo?',reply_markup=markup2)
 
     return MORE_PHOTO
 
-def more_photo(bot, uptade, user_data):
+def more_photo(bot, update, user_data):
     user=update.message.from_user
     if(update.message.text== 'Yes'):
         update.message.reply_text('Send me a photo of one ingredient.')
         return PHOTO
     else: 
+        message = 'Is/are your ingredient/s '
+        for i in range (0,len(ingr_correct)-1):
+            if i == (len(ingr_correct)-2):
+                message = message + str(ingr_correct[i])+ ' and '
+            else :
+                message = message + str(ingr_correct[i]) + ', '
+            
+        message = message + str (ingr_correct[len(ingr_correct)-1]) + ' ? '
+        update.message.reply_text(message, reply_markup=markup2)
         return GET_RECIPE
 
 def regular_choice(bot, update, user_data):
@@ -158,13 +174,7 @@ def quick_checker (bot, update,user_data):
 
 
 def received_information(bot, update,user_data):
-    for o in range(0,len(ingr_list_client)):
-        ingr_list_client.remove(ingr_list_client[0])
-        ingr_correction.remove(ingr_correction[0])
-    
-    for k in range(0,len(ingr_correct)):
-        print k
-        ingr_correct.remove(ingr_correct[0])
+
 
     #if len(ingr_correct)>0:
     user = update.message.from_user
@@ -236,7 +246,7 @@ def error(bot, update, error):
 
 def main():
     # Create the Updater and pass it your bot's token.
-    updater = Updater('481223618:AAE7rQT-Y8eRio5DK6h8HaUWxkvdn6WWTYQ')
+    updater = Updater('462835538:AAH1C3vgdWf4Kd2z6fW-TmaCK21JMC3Jphg')
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
