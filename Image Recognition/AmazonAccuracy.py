@@ -37,9 +37,11 @@ def main():
             real_label = path.name.lower()
             for ingredient in path.glob('*.jpg'):
                 file_name = str(path.joinpath(ingredient.name))
+                print(file_name)
                 with io.open(file_name,'rb') as image_file:
                     content = image_file.read()
                 score = amazon_accuracy(content,real_label,client)
+                print(str(score))
                 if score==0.0:
                     cont_fallo += 1
                 else:
