@@ -62,7 +62,7 @@ def tipus (bot, update, user_data):
         ingr_correction.remove(ingr_correction[0])
     
     for k in range(0,len(ingr_correct)):
-        print k
+        print (k)
         ingr_correct.remove(ingr_correct[0])
     update.message.reply_text('Do you want to write or to send a photo of the ingredients?', reply_markup=markup3)
     return TIPUS
