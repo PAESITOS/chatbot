@@ -69,36 +69,32 @@ def tipus (bot, update, user_data):
 
 def foto_choice(bot, update, user_data):
     update.message.reply_text('Send one igredient image')
-    
-    #update.message.reply_text('COMING SOON! Select Written for a recipe', reply_markup=markup3)
     return PHOTO
 
 def photo(bot, update):
-    user=update.message.from_user
-    photo_file= bot.get_file(update.message.photo[-1].file_id)
-    photo_file.download('ingredient.jpg')
-    logger.info("Photo of %s: %s", user.first_name, 'ingredient.jpg')
-
-    ingr_correct.append(amazon_recognition()) #Això ens proporciona un label que ha estat filtrat
-    update.message.reply_text('Do you want to send another photo?',reply_markup=markup2)
-
+    photo = bot.get_file(update.message.photo[-1].file_id).download_as_bytearray()
+    label = amazon_recognition(photo)
+    if label is None:
+        update.message.reply_text("I can't find any ingredients on your foto.")
+    else:
+        ingr_correct.append(label) #Això ens proporciona un label que ha estat filtrat
+    update.message.reply_text('Do you want to send another photo?', reply_markup=markup2)
     return MORE_PHOTO
 
 def more_photo(bot, update, user_data):
     user=update.message.from_user
-    if(update.message.text== 'Yes'):
+    if(update.message.text == 'Yes'):
         update.message.reply_text('Send me a photo of one ingredient.')
         return PHOTO
-    else: 
-        message = 'Is/are your ingredient/s '
-        for i in range (0,len(ingr_correct)-1):
-            if i == (len(ingr_correct)-2):
-                message = message + str(ingr_correct[i])+ ' and '
-            else :
-                message = message + str(ingr_correct[i]) + ', '
-            
-        message = message + str (ingr_correct[len(ingr_correct)-1]) + ' ? '
-        update.message.reply_text(message, reply_markup=markup2)
+    else:
+        if len(ingr_correct) > 1:
+            msg = 'Is your ingredient ' + str(ingr_correct) + '?'
+        else:
+            msg = 'Are your ingredients '
+            for i, ingr in enumerate(ingr_correct[0:-2]):
+                msg = msg + str(ingr) + ', '
+            msg = msg + ' & ' str(ingr[-1]) + ' ?'
+        update.message.reply_text(msg, reply_markup=markup2)
         return GET_RECIPE
 
 def regular_choice(bot, update, user_data):
