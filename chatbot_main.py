@@ -54,8 +54,8 @@ def start(bot, update):
     update.message.reply_text("Hi! My name is Ramsay Junior.  "
         "What do you want to do?",
         reply_markup=markup)
-
     return CHOOSING
+
 def tipus (bot, update, user_data):
     for o in range(0,len(ingr_list_client)):
         ingr_list_client.remove(ingr_list_client[0])
